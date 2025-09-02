@@ -27,9 +27,28 @@ class ViewController: UIViewController {
         
         let phoneNumber = phoneNumberTextField.text
         
+        var newContact = Contact(name: name ?? "", surname: surname ?? "", phoneNumber: phoneNumber ?? "")
         
+        do {
+             
+            if  let data = UserDefaults.standard.data(forKey: "contacts") {
+                
+                var array = try JSONDecoder().decode([Contact].self, from: data)
+                
+                array.append(newContact)
+                
+                let encodedata = try JSONEncoder().encode(array)
+                
+            } else {
+                let encodedata = try JSONEncoder().encode([newContact])
+                
+                UserDefaults.standard.set(encodedata,forKey: "contacts")
+            }
+        }
         
     }
+    
+    
     
 
 }
