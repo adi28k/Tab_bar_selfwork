@@ -8,6 +8,8 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    var arrayContact: [Contact] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +20,23 @@ class TableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        do {
+            if let data  = UserDefaults.standard.data(forKey:"contacts") {
+                let array = try JSONDecoder().decode([Contact].self, from: data)
+                
+                arrayContact = array
+                
+                tableView.reloadData()
+            }
+        }
+            catch {
+                print("unable to code \(error)" )
+            }
+        
+        }
+    
 
     // MARK: - Table view data source
 
@@ -28,7 +47,7 @@ class TableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return arrayContact.count
     }
 
     
@@ -36,6 +55,8 @@ class TableViewController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
 
         // Configure the cell...
+        
+        cell.textLabel?.text = arrayContact[indexPath.row].name
 
         return cell
     }

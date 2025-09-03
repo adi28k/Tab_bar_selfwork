@@ -45,7 +45,10 @@ class ViewController: UIViewController {
                 UserDefaults.standard.set(encodedata,forKey: "contacts")
             }
         }
-        
+        catch {
+            print ("unable to encode \(error)")
+        }
+            
     }
     
     
