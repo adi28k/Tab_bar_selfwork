@@ -22,21 +22,38 @@ class TableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         do {
-            if let data  = UserDefaults.standard.data(forKey:"contacts") {
-                let array = try JSONDecoder().decode([Contact].self, from: data)
+            if let data = UserDefaults.standard.data(forKey: "contactsArray") {
+                
+                var array = try JSONDecoder().decode([Contact].self, from: data)
                 
                 arrayContact = array
                 
                 tableView.reloadData()
             }
         }
-            catch {
-                print("unable to code \(error)" )
-            }
+        
+        catch {
+            print("unbale to code \(error)")
+        }
+        
         
         }
     
+    
+    func saveContact () {
+        
+        do {
+            let encodeData = try JSONEncoder().encode(arrayContact)
+            
+            UserDefaults.standard.set(encodeData, forKey: "contactsArray")
+        }
+        
+        catch{
+            print("unbale to code \(error)")
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -56,7 +73,11 @@ class TableViewController: UITableViewController {
 
         // Configure the cell...
         
-        cell.textLabel?.text = arrayContact[indexPath.row].name
+        cell.textLabel?.text = arrayContact[indexPath.row].name + "" +
+        
+        arrayContact[indexPath.row].surname
+        
+        cell.detailTextLabel?.text = arrayContact[indexPath.row].phoneNumber
 
         return cell
     }
@@ -70,17 +91,22 @@ class TableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
+            arrayContact.remove(at: indexPath.row)
+            
+            saveContact()
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
+    
 
     /*
     // Override to support rearranging the table view.

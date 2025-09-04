@@ -21,36 +21,39 @@ class ViewController: UIViewController {
     
     @IBAction func addContact(_ sender: Any) {
         
-        let name = nameTextField.text
+        let name = nameTextField.text!
         
-        let surname = surnameTextField.text
+        let surname = surnameTextField.text!
         
-        let phoneNumber = phoneNumberTextField.text
+        let phoneNumber = phoneNumberTextField.text!
         
-        var newContact = Contact(name: name ?? "", surname: surname ?? "", phoneNumber: phoneNumber ?? "")
+       var newContact = Contact(name: name, surname: surname, phoneNumber: phoneNumber)
         
         do {
-             
-            if  let data = UserDefaults.standard.data(forKey: "contacts") {
+            
+            if let data = UserDefaults.standard.data(forKey: "contactsArray") {
                 
                 var array = try JSONDecoder().decode([Contact].self, from: data)
                 
                 array.append(newContact)
                 
-                let encodedata = try JSONEncoder().encode(array)
+                let encodeData = try JSONEncoder().encode(array)
                 
-            } else {
-                let encodedata = try JSONEncoder().encode([newContact])
+                UserDefaults.standard.set(encodeData,forKey: "contactsArray")
+            }
+            
+            else {
+                let encodeData = try JSONEncoder().encode([newContact])
                 
-                UserDefaults.standard.set(encodedata,forKey: "contacts")
+                UserDefaults.standard.set(encodeData,forKey: "contactsArray")
             }
         }
-        catch {
-            print ("unable to encode \(error)")
-        }
+            catch {
+                print ("unable to code \(error)")
+            }
+                
             
     }
-    
     
     
 
