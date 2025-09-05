@@ -73,7 +73,7 @@ class TableViewController: UITableViewController {
 
         // Configure the cell...
         
-        cell.textLabel?.text = arrayContact[indexPath.row].name + "" +
+        cell.textLabel?.text = arrayContact[indexPath.row].name + " " +
         
         arrayContact[indexPath.row].surname
         
