@@ -182,7 +182,7 @@
         <!--Add contact-->
         <scene sceneID="2tu-Ml-fsH">
             <objects>
-                <viewController id="KAe-2Q-PKp" customClass="EditViewController" customModule="Tab_bar_selfwork" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editScreen" id="KAe-2Q-PKp" customClass="EditViewController" customModule="Tab_bar_selfwork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hm6-NE-v8I">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

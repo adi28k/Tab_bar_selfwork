@@ -23,10 +23,12 @@ class TableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        super.viewWillAppear(animated)
+        
         do {
             if let data = UserDefaults.standard.data(forKey: "contactsArray") {
                 
-                var array = try JSONDecoder().decode([Contact].self, from: data)
+                let array = try JSONDecoder().decode([Contact].self, from: data)
                 
                 arrayContact = array
                 
@@ -37,7 +39,6 @@ class TableViewController: UITableViewController {
         catch {
             print("unbale to code \(error)")
         }
-        
         
         }
     
@@ -80,6 +81,21 @@ class TableViewController: UITableViewController {
         cell.detailTextLabel?.text = arrayContact[indexPath.row].phoneNumber
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let editScreen = storyboard?.instantiateViewController(withIdentifier: "editScreen") as! EditViewController
+        
+        editScreen.index = indexPath.row
+        
+        editScreen.contact = arrayContact[indexPath.row]
+        
+        editScreen.arrayContacts = arrayContact
+        
+        navigationController?.show(editScreen, sender: self)
+        
+        
     }
     
 

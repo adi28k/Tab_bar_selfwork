@@ -40,6 +40,28 @@ class EditViewController: UIViewController {
         
         let nameEdit = nameEdit.text!
         
+        let surnameEdit = surnameEdit.text!
+        
+        let phoneEdit = phoneEdit.text!
+        
+        
+        var editContact = Contact(name: nameEdit, surname: surnameEdit, phoneNumber: phoneEdit)
+        
+        arrayContacts[index] = editContact
+        
+        
+        
+        
+        do {
+            
+            let encodedate = try JSONEncoder().encode(arrayContacts)
+            UserDefaults.standard.set(encodedate, forKey: "contactsArray")
+            
+        }
+        
+        catch {
+            print("unable to code \(error)")
+        }
     }
     
     
